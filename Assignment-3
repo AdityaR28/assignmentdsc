@@ -1,0 +1,110 @@
+Assignment-3:
+
+Implement the following functions for a single linked list:
+1. Insert at end
+2. Delete from beginning
+3. Delete from end
+
+CODE:
+
+#include <iostream>
+using namespace std;
+ 
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+Node* removeFirstNode(struct Node* head)
+{
+    if (head == NULL)
+        return NULL;
+ 
+    Node* temp = head;
+    head = head->next;
+ 
+    delete temp;
+ 
+    return head;
+}
+ 
+void push(struct Node** head_ref, int new_data)
+{
+    struct Node* new_node = new Node;
+    new_node->data = new_data;
+    new_node->next = (*head_ref);
+    (*head_ref) = new_node;
+}
+
+void append(struct Node** head_ref, int new_data)
+{
+    struct Node* new_node = new Node();
+    Node *last = *head_ref;
+    new_node->data=new_data;
+    new_node->next=NULL;
+    if (*head_ref == NULL)
+    {
+        *head_ref = new_node;
+        return;
+    }
+    while (last->next != NULL)
+        last = last->next;
+    last->next = new_node;
+    return;
+}
+Node* removeLastNode(struct Node* head)
+{
+    if (head == NULL)
+        return NULL;
+ 
+    if (head->next == NULL) {
+        delete head;
+        return NULL;
+    }
+ 
+    
+    Node* second_last = head;
+    while (second_last->next->next != NULL)
+        second_last = second_last->next;
+ 
+    delete (second_last->next);
+ 
+    second_last->next = NULL;
+ 
+    return head;
+}
+void printList(Node *node)
+{
+    while (node != NULL)
+    {
+        cout<<" "<<node->data;
+        node = node->next;
+    }
+}
+
+int main()
+{
+    Node* head = NULL;
+    Node* temp;
+ 
+    push(&head, 23);
+    push(&head, 15);
+    push(&head, 19);
+    push(&head, 31);
+    append(&head, 8);
+
+    
+    head = removeFirstNode(head);
+    for (Node* temp = head; temp != NULL; temp = temp->next)
+        cout << temp->data << " ";
+        if(temp==NULL)
+        cout<<"NULL"<<endl;
+ 
+    head = removeLastNode(head);
+    for (Node* temp = head; temp != NULL; temp = temp->next)
+        cout << temp->data << " ";
+        if(temp==NULL)
+        cout<<"NULL"<<endl;
+ 
+    return 0;
+}
